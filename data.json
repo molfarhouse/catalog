@@ -1,0 +1,29 @@
+[
+  {
+    "id": "zippo-kosak",
+    "name": "Запальничка Zippo «Козак»",
+    "price": "39$",
+    "category": "Запальнички",
+    "short": "Чорна Zippo з гравіюванням козака.",
+    "long": "Оригінальна запальничка Zippo з лазерним гравіюванням козака. Корпус — метал, колір — чорний матовий. Можемо додати індивідуальний напис.",
+    "images": [
+      "zippo-kosak-1.jpg",
+      "zippo-kosak-2.jpg"
+    ],
+    "contactLink": "https://m.me/ТВОЙ_FACEBOOK" 
+  },
+  {
+    "id": "knife-mossy",
+    "name": "Тактичний ніж Mossy",
+    "price": "49$",
+    "category": "Ножі",
+    "short": "Тактичний ніж з гравіюванням.",
+    "long": "Міцний тактичний ніж з фіксованим лезом, гравіюванням на клинку та чохлом. Підходить як подарунок мисливцю або для EDC.",
+    "images": [
+      "knife-mossy-1.jpg",
+      "knife-mossy-2.jpg",
+      "knife-mossy-3.jpg"
+    ],
+    "contactLink": "https://m.me/ТВОЙ_FACEBOOK"
+  }
+]
