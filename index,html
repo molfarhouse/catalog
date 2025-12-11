@@ -139,4 +139,195 @@
     }
     .thumbs {
       display: flex;
-      fle
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .thumbs img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .thumbs img.active {
+      border-color: #0a7a2f;
+    }
+    .modal-price {
+      font-size: 19px;
+      color: #0a7a2f;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .modal-category {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+    .modal-long {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .modal-actions {
+      margin-top: 14px;
+    }
+    .btn-contact {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      background: #1877f2;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-contact:hover {
+      background: #145fc2;
+    }
+
+    @media (max-width: 720px) {
+      .modal-body {
+        flex-direction: column;
+      }
+      .modal {
+        max-height: 100vh;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Каталог товарів Molfarhouse</h1>
+</header>
+<main>
+  <div id="list" class="list"></div>
+</main>
+
+<!-- Модальне вікно -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-left">
+        <img id="modalMainImg" class="modal-main-img" src="" alt="">
+        <div id="thumbs" class="thumbs"></div>
+      </div>
+      <div class="modal-right">
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-long" id="modalLong"></div>
+        <div class="modal-actions">
+          <a id="modalContact" class="btn-contact" href="#" target="_blank">
+            Написати в Messenger
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function loadCatalog() {
+    try {
+      const res = await fetch('data.json');
+      const items = await res.json();
+      renderList(items);
+      window._catalogItems = items;
+    } catch (e) {
+      console.error('Помилка завантаження каталогу', e);
+    }
+  }
+
+  function renderList(items) {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+
+    items.forEach(item => {
+      const mainImg = item.images && item.images.length ? item.images[0] : '';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.id = item.id;
+
+      card.innerHTML = `
+        <img class="card-img" src="${mainImg}" alt="${item.name}">
+        <div class="card-body">
+          <div class="card-title">${item.name}</div>
+          <div class="card-price">${item.price || ''}</div>
+          <div class="card-short">${item.short || ''}</div>
+          <div class="card-category">${item.category || ''}</div>
+        </div>
+      `;
+
+      card.addEventListener('click', () => openModal(item.id));
+      list.appendChild(card);
+    });
+  }
+
+  function openModal(id) {
+    const item = (window._catalogItems || []).find(i => i.id === id);
+    if (!item) return;
+
+    const backdrop = document.getElementById('modalBackdrop');
+    const titleEl = document.getElementById('modalTitle');
+    const priceEl = document.getElementById('modalPrice');
+    const catEl = document.getElementById('modalCategory');
+    const longEl = document.getElementById('modalLong');
+    const mainImgEl = document.getElementById('modalMainImg');
+    const thumbsEl = document.getElementById('thumbs');
+    const contactEl = document.getElementById('modalContact');
+
+    titleEl.textContent = item.name || '';
+    priceEl.textContent = item.price || '';
+    catEl.textContent = item.category ? 'Категорія: ' + item.category : '';
+    longEl.textContent = item.long || '';
+
+    thumbsEl.innerHTML = '';
+
+    if (item.images && item.images.length) {
+      mainImgEl.src = item.images[0];
+
+      item.images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        if (idx === 0) img.classList.add('active');
+        img.addEventListener('click', () => {
+          mainImgEl.src = src;
+          [...thumbsEl.querySelectorAll('img')].forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+        });
+        thumbsEl.appendChild(img);
+      });
+    } else {
+      mainImgEl.src = '';
+    }
+
+    if (item.contactLink) {
+      contactEl.href = item.contactLink;
+    } else {
+      contactEl.href = '#';
+    }
+
+    backdrop.classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('show');
+  }
+
+  document.getElementById('modalBackdrop').addEventListener('click', e => {
+    if (e.target.id === 'modalBackdrop') closeModal();
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+
+  loadCatalog();
+</script>
+</body>
+</html>
