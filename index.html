@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Molfarhouse Catalog</title>
+  <title>MolfarHouse Catalog</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -13,60 +15,63 @@
       color: #222;
     }
 
-    /* HEADER */
+    /* ===== HEADER ===== */
     header {
       background: #111;
       color: #fff;
-      padding: 14px 18px;
+      padding: 16px 18px;
     }
+
     .header-inner {
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 110px 1fr 110px; /* left logo | center text | spacer */
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
       align-items: center;
-      gap: 12px;
     }
-    .brand-left {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-    }
+
     .site-logo {
-      width: 78px;
+      width: 80px;
       height: auto;
       display: block;
     }
+
     .hero {
       text-align: center;
-      padding: 2px 0;
     }
+
     .hero-title {
       margin: 0;
       font-size: 18px;
       letter-spacing: 1px;
       font-weight: 800;
     }
+
     .hero-desc {
-      margin: 6px auto 0;
-      max-width: 860px;
+      margin-top: 6px;
       font-size: 13px;
       line-height: 1.45;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.85);
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    /* ===== MAIN ===== */
     main {
       max-width: 1100px;
       margin: 20px auto;
-      padding: 0 16px 28px;
+      padding: 0 16px 30px;
     }
 
-    /* CATALOG GRID */
+    /* ===== CATALOG ===== */
     .list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 18px;
     }
+
     .card {
       background: #fff;
       border-radius: 10px;
@@ -77,82 +82,86 @@
       flex-direction: column;
       transition: transform .1s ease, box-shadow .1s ease;
     }
+
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     }
+
     .card-img {
       width: 100%;
       height: 190px;
       object-fit: cover;
       background: #ddd;
     }
+
     .card-body {
       padding: 10px 12px 12px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+
     .card-title {
       font-weight: 600;
       font-size: 15px;
     }
+
     .card-price {
       color: #0a7a2f;
       font-weight: 700;
       font-size: 15px;
     }
+
     .card-short {
       font-size: 13px;
       color: #666;
     }
+
     .card-category {
       font-size: 12px;
       color: #999;
       margin-top: 4px;
     }
 
-    /* BUTTONS UNDER CATALOG */
+    /* ===== ACTION BUTTONS ===== */
     .actions-row {
-      margin-top: 18px;
+      margin-top: 22px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
     }
+
     .big-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 18px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
+      flex: 1;
+      min-width: 260px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      text-align: center;
       font-size: 14px;
       font-weight: 800;
       letter-spacing: 0.5px;
-      min-width: 280px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
       transition: transform .08s ease, box-shadow .08s ease;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .big-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(0,0,0,0.16);
-    }
-    .btn-messenger {
-      background: #1877f2;
-      color: #fff;
-    }
-    .btn-facebook {
-      background: #145fc2;
-      color: #fff;
     }
 
-    /* MODAL */
+    .big-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.2);
+    }
+
+    .btn-messenger {
+      background: #1877f2;
+    }
+
+    .btn-facebook {
+      background: #145fc2;
+    }
+
+    /* ===== MODAL ===== */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -162,46 +171,51 @@
       justify-content: center;
       z-index: 1000;
     }
+
     .modal-backdrop.show { display: flex; }
+
     .modal {
       background: #fff;
       border-radius: 12px;
       max-width: 900px;
       width: 95%;
       max-height: 90vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
+
     .modal-header {
       padding: 10px 16px;
       border-bottom: 1px solid #eee;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
+
     .modal-title {
       font-weight: 600;
       font-size: 17px;
     }
+
     .modal-close {
       background: none;
       border: none;
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
-      line-height: 1;
     }
+
     .modal-body {
       display: flex;
-      flex-direction: row;
       gap: 16px;
       padding: 12px 16px 16px;
       overflow-y: auto;
     }
+
     .modal-left, .modal-right {
       flex: 1;
-      min-width: 0;
     }
+
     .modal-main-img {
       width: 100%;
       max-height: 320px;
@@ -209,12 +223,14 @@
       background: #eee;
       border-radius: 8px;
     }
+
     .thumbs {
       display: flex;
-      flex-wrap: wrap;
       gap: 6px;
       margin-top: 8px;
+      flex-wrap: wrap;
     }
+
     .thumbs img {
       width: 70px;
       height: 70px;
@@ -223,52 +239,48 @@
       cursor: pointer;
       border: 2px solid transparent;
     }
+
     .thumbs img.active {
       border-color: #0a7a2f;
     }
+
     .modal-price {
       font-size: 19px;
       color: #0a7a2f;
       font-weight: 700;
       margin-bottom: 6px;
     }
+
     .modal-category {
       font-size: 13px;
       color: #999;
       margin-bottom: 10px;
     }
+
     .modal-long {
       font-size: 14px;
       line-height: 1.5;
     }
-    .modal-actions {
-      margin-top: 14px;
-    }
+
     .btn-contact {
       display: inline-block;
+      margin-top: 14px;
       padding: 10px 14px;
       border-radius: 10px;
-      border: none;
       background: #1877f2;
       color: #fff;
-      font-size: 14px;
       font-weight: 700;
-      cursor: pointer;
       text-decoration: none;
     }
-    .btn-contact:hover { background: #145fc2; }
 
     @media (max-width: 720px) {
       .header-inner {
-        grid-template-columns: 90px 1fr;
-        grid-template-rows: auto auto;
+        grid-template-columns: 1fr;
+        text-align: center;
       }
-      .brand-left { grid-row: 1 / span 2; }
-      .hero { text-align: left; }
-      .hero-desc { margin-left: 0; }
-      .modal-body { flex-direction: column; }
-      .modal { max-height: 100vh; border-radius: 0; }
-      .big-btn { min-width: 100%; }
+      .modal-body {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -276,18 +288,16 @@
 
 <header>
   <div class="header-inner">
-    <div class="brand-left">
-      <img class="site-logo" src="assets/logo.png" alt="Molfar House Logo">
-    </div>
+    <img src="logofin.png" alt="Molfar House Logo" class="site-logo">
 
     <div class="hero">
       <h1 class="hero-title">ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
       <div class="hero-desc">
-        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах. Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
+        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах.
+        Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи
+        та персоналізовані вироби для подарунків, подій і бізнесу.
       </div>
     </div>
-
-    <div></div>
   </div>
 </header>
 
@@ -295,62 +305,26 @@
   <div id="list" class="list"></div>
 
   <div class="actions-row">
-    <a class="big-btn btn-messenger" id="contactMainBtn" href="#" target="_blank" rel="noopener">
+    <a class="big-btn btn-messenger"
+       href="https://m.me/896521503539274"
+       target="_blank">
       КНОПКА ДЛЯ ЗВ`ЯЗКУ
     </a>
 
-    <a class="big-btn btn-facebook" id="followFbBtn" href="#" target="_blank" rel="noopener">
+    <a class="big-btn btn-facebook"
+       href="https://www.facebook.com/profile.php?id=61582619286310"
+       target="_blank">
       ПІДПИШІТЬСЯ НА ФЕЙСБУК
     </a>
   </div>
 </main>
 
-<!-- Модальне вікно -->
-<div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="modalTitle"></div>
-      <button class="modal-close" id="modalClose">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-left">
-        <img id="modalMainImg" class="modal-main-img" src="" alt="">
-        <div id="thumbs" class="thumbs"></div>
-      </div>
-      <div class="modal-right">
-        <div class="modal-price" id="modalPrice"></div>
-        <div class="modal-category" id="modalCategory"></div>
-        <div class="modal-long" id="modalLong"></div>
-        <div class="modal-actions">
-          <a id="modalContact" class="btn-contact" href="#" target="_blank" rel="noopener">
-            Написати в Messenger
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-  // ТВОЙ Messenger URL (из твоего скрина)
-  const DEFAULT_MESSENGER_LINK = "https://m.me/896521503539274";
-
-  // ТВОЯ FB-страница (из адресной строки на скрине)
-  const FACEBOOK_PAGE_LINK = "https://www.facebook.com/profile.php?id=61582619286310";
-
-  // Подключаем кнопки снизу страницы
-  document.getElementById("contactMainBtn").href = DEFAULT_MESSENGER_LINK;
-  document.getElementById("followFbBtn").href = FACEBOOK_PAGE_LINK;
-
   async function loadCatalog() {
-    try {
-      const res = await fetch('data.json', { cache: "no-store" });
-      const items = await res.json();
-      renderList(items);
-      window._catalogItems = items;
-    } catch (e) {
-      console.error('Помилка завантаження каталогу', e);
-    }
+    const res = await fetch('data.json', { cache: 'no-store' });
+    const items = await res.json();
+    renderList(items);
+    window._items = items;
   }
 
   function renderList(items) {
@@ -358,14 +332,11 @@
     list.innerHTML = '';
 
     items.forEach(item => {
-      const mainImg = item.images && item.images.length ? item.images[0] : '';
-
       const card = document.createElement('div');
       card.className = 'card';
-      card.dataset.id = item.id;
 
       card.innerHTML = `
-        <img class="card-img" src="${mainImg}" alt="${item.name || ''}">
+        <img class="card-img" src="${item.images?.[0] || ''}">
         <div class="card-body">
           <div class="card-title">${item.name || ''}</div>
           <div class="card-price">${item.price || ''}</div>
@@ -374,63 +345,9 @@
         </div>
       `;
 
-      card.addEventListener('click', () => openModal(item.id));
       list.appendChild(card);
     });
   }
-
-  function openModal(id) {
-    const item = (window._catalogItems || []).find(i => i.id === id);
-    if (!item) return;
-
-    const backdrop = document.getElementById('modalBackdrop');
-    const titleEl = document.getElementById('modalTitle');
-    const priceEl = document.getElementById('modalPrice');
-    const catEl = document.getElementById('modalCategory');
-    const longEl = document.getElementById('modalLong');
-    const mainImgEl = document.getElementById('modalMainImg');
-    const thumbsEl = document.getElementById('thumbs');
-    const contactEl = document.getElementById('modalContact');
-
-    titleEl.textContent = item.name || '';
-    priceEl.textContent = item.price || '';
-    catEl.textContent = item.category ? 'Категорія: ' + item.category : '';
-    longEl.textContent = item.long || '';
-
-    thumbsEl.innerHTML = '';
-
-    if (item.images && item.images.length) {
-      mainImgEl.src = item.images[0];
-
-      item.images.forEach((src, idx) => {
-        const img = document.createElement('img');
-        img.src = src;
-        if (idx === 0) img.classList.add('active');
-        img.addEventListener('click', () => {
-          mainImgEl.src = src;
-          [...thumbsEl.querySelectorAll('img')].forEach(t => t.classList.remove('active'));
-          img.classList.add('active');
-        });
-        thumbsEl.appendChild(img);
-      });
-    } else {
-      mainImgEl.src = '';
-    }
-
-    // Если в data.json нет contactLink — используем общий Messenger
-    contactEl.href = item.contactLink ? item.contactLink : DEFAULT_MESSENGER_LINK;
-
-    backdrop.classList.add('show');
-  }
-
-  function closeModal() {
-    document.getElementById('modalBackdrop').classList.remove('show');
-  }
-
-  document.getElementById('modalBackdrop').addEventListener('click', e => {
-    if (e.target.id === 'modalBackdrop') closeModal();
-  });
-  document.getElementById('modalClose').addEventListener('click', closeModal);
 
   loadCatalog();
 </script>
