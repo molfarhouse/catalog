@@ -1,492 +1,491 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Molfarhouse Catalog</title>
   <style>
     * { box-sizing: border-box; }
 
-    body{
-      margin:0;
+    body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      color:#222;
+      color: #222;
 
-      /* Ватман (база) */
-      background:#f3efe6;
-      position: relative;
-      overflow-x: hidden;
+      /* ФОН (твой загруженный fon.png) */
+      background-image: url('fon.png');
+      background-repeat: repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
     }
 
-    /* Текстура ватмана + легкие кляксы */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-2;
-
-      /* Текстура: мягкая бумажная зернистость */
-      background:
-        radial-gradient(circle at 12% 18%, rgba(0,0,0,.06) 0 1px, transparent 2px) 0 0/120px 120px,
-        radial-gradient(circle at 70% 35%, rgba(0,0,0,.05) 0 1px, transparent 2px) 0 0/160px 160px,
-        radial-gradient(circle at 40% 80%, rgba(0,0,0,.04) 0 1px, transparent 2px) 0 0/140px 140px,
-        linear-gradient(180deg, rgba(255,255,255,.35), rgba(0,0,0,.02)),
-        #f3efe6;
-      filter: contrast(1.02) saturate(0.95);
-    }
-
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-
-      /* Кляксы/пятна рабочей поверхности */
-      background:
-        radial-gradient(ellipse at 15% 22%, rgba(120,90,55,.12) 0 70px, transparent 75px),
-        radial-gradient(ellipse at 22% 26%, rgba(120,90,55,.08) 0 35px, transparent 38px),
-        radial-gradient(ellipse at 78% 18%, rgba(60,60,60,.10) 0 55px, transparent 60px),
-        radial-gradient(ellipse at 84% 24%, rgba(60,60,60,.06) 0 25px, transparent 29px),
-        radial-gradient(ellipse at 10% 78%, rgba(30,90,120,.09) 0 80px, transparent 85px),
-        radial-gradient(ellipse at 18% 83%, rgba(30,90,120,.05) 0 30px, transparent 34px),
-        radial-gradient(ellipse at 70% 82%, rgba(120,60,90,.08) 0 70px, transparent 75px),
-        radial-gradient(ellipse at 62% 88%, rgba(120,60,90,.05) 0 28px, transparent 32px);
-      mix-blend-mode: multiply;
-      opacity: .9;
-    }
-
-    header{
-      background:#111;
-      color:#fff;
+    header {
+      background: #111;
+      color: #fff;
       padding: 14px 18px;
-      border-bottom: 2px solid rgba(255,255,255,.06);
+      border-bottom: 2px solid rgba(255,255,255,0.08);
     }
 
-    .header-wrap{
-      max-width:1100px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      gap:16px;
+    .topbar {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 120px 1fr 120px;
+      align-items: center;
+      gap: 14px;
     }
 
-    .logo-box{
-      width: 120px;
-      min-width: 120px;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    .logo-box img{
-      width: 88px;
-      height: 88px;
+    .logo {
+      width: 78px;
+      height: 78px;
       object-fit: contain;
-      display:block;
+      display: block;
     }
 
-    .header-center{
-      flex:1;
-      text-align:center;
-      padding: 2px 8px;
+    .head-center {
+      text-align: center;
     }
 
-    .header-title{
-      margin:0;
+    .head-center h1 {
+      margin: 0;
       font-size: 22px;
       letter-spacing: 1px;
       font-weight: 800;
-      text-transform: uppercase;
     }
 
-    .header-desc{
-      margin: 6px auto 0;
-      max-width: 760px;
-      font-size: 13.5px;
+    .head-center p {
+      margin: 6px 0 0;
+      font-size: 13px;
       line-height: 1.45;
-      color: rgba(255,255,255,.85);
+      color: rgba(255,255,255,0.9);
     }
 
-    main{
-      max-width:1100px;
-      margin: 18px auto 26px;
-      padding: 0 16px 30px;
+    .spacer {
+      /* пустой блок справа для симметрии */
     }
 
-    .catalog-title{
-      margin: 8px 0 14px;
+    main {
+      max-width: 1100px;
+      margin: 18px auto;
+      padding: 0 16px 26px;
+    }
+
+    .section-title {
+      margin: 10px 0 14px;
+      text-align: center;
       font-size: 18px;
       font-weight: 800;
-      color:#111;
-      letter-spacing:.3px;
+      letter-spacing: 0.6px;
+      color: #111;
     }
 
-    .list{
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap:18px;
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+      gap: 18px;
     }
 
-    .card{
-      background:#fff;
-      border-radius:10px;
-      overflow:hidden;
+    .card {
+      background: rgba(255,255,255,0.92);
+      border-radius: 10px;
+      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-      cursor:pointer;
-      display:flex;
-      flex-direction:column;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
       transition: transform .1s ease, box-shadow .1s ease;
-      border: 1px solid rgba(0,0,0,.06);
+      backdrop-filter: blur(2px);
     }
 
-    .card:hover{
+    .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
     }
 
-    .card-img{
-      width:100%;
-      height:190px;
-      object-fit:cover;
-      background:#ddd;
+    .card-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #ddd;
     }
 
-    .card-body{
+    .card-body {
       padding: 10px 12px 12px;
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .card-title{ font-weight: 700; font-size: 15px; }
-    .card-price{ color:#0a7a2f; font-weight:800; font-size: 15px; }
-    .card-short{ font-size: 13px; color:#666; }
-    .card-category{ font-size: 12px; color:#999; margin-top:4px; }
+    .card-title {
+      font-weight: 700;
+      font-size: 15px;
+    }
 
-    .below-actions{
-      display:flex;
-      gap:14px;
-      margin-top: 18px;
-      align-items:center;
+    .card-price {
+      color: #0a7a2f;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .card-short {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .card-category {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* КНОПКИ ПОД КАТАЛОГОМ */
+    .bottom-actions {
+      margin: 18px auto 0;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      min-width: 260px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    }
+
+    .btn-messenger {
+      background: #1877f2;
+      color: #fff;
+    }
+    .btn-messenger:hover { background: #145fc2; }
+
+    .btn-facebook {
+      background: #111;
+      color: #fff;
+    }
+    .btn-facebook:hover { background: #000; }
+
+    /* Модалка */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 95%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
       justify-content: space-between;
     }
 
-    .big-btn{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 14px 16px;
-      border-radius: 12px;
-      font-size: 15px;
+    .modal-title {
       font-weight: 800;
-      text-decoration:none;
-      border: 1px solid rgba(0,0,0,.10);
-      box-shadow: 0 6px 16px rgba(0,0,0,.10);
-      transition: transform .08s ease, box-shadow .08s ease, filter .08s ease;
+      font-size: 17px;
     }
 
-    .big-btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(0,0,0,.16);
-      filter: brightness(1.02);
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
     }
 
-    .btn-messenger{
-      background:#1877f2;
-      color:#fff;
+    .modal-body {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      padding: 12px 16px 16px;
+      overflow-y: auto;
     }
 
-    .btn-facebook{
-      background:#111;
-      color:#fff;
+    .modal-left, .modal-right {
+      flex: 1;
+      min-width: 0;
     }
 
-    /* Модалка */
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,0.65);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
+    .modal-main-img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      background: #eee;
+      border-radius: 8px;
     }
 
-    .modal-backdrop.show{ display:flex; }
-
-    .modal{
-      background:#fff;
-      border-radius:12px;
-      max-width:900px;
-      width:95%;
-      max-height:90vh;
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
+    .thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
     }
 
-    .modal-header{
-      padding:10px 16px;
-      border-bottom:1px solid #eee;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .thumbs img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
     }
 
-    .modal-title{ font-weight:700; font-size:17px; }
-    .modal-close{
-      background:none;
-      border:none;
-      font-size:20px;
-      cursor:pointer;
-      line-height:1;
+    .thumbs img.active {
+      border-color: #0a7a2f;
     }
 
-    .modal-body{
-      display:flex;
-      flex-direction:row;
-      gap:16px;
-      padding:12px 16px 16px;
-      overflow-y:auto;
+    .modal-price {
+      font-size: 19px;
+      color: #0a7a2f;
+      font-weight: 800;
+      margin-bottom: 6px;
     }
 
-    .modal-left, .modal-right{ flex:1; min-width:0; }
-
-    .modal-main-img{
-      width:100%;
-      max-height:320px;
-      object-fit:contain;
-      background:#eee;
-      border-radius:8px;
+    .modal-category {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 10px;
     }
 
-    .thumbs{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-top:8px;
+    .modal-long {
+      font-size: 14px;
+      line-height: 1.5;
     }
 
-    .thumbs img{
-      width:70px;
-      height:70px;
-      object-fit:cover;
-      border-radius:6px;
-      cursor:pointer;
-      border:2px solid transparent;
+    .modal-actions {
+      margin-top: 14px;
     }
 
-    .thumbs img.active{ border-color:#0a7a2f; }
-
-    .modal-price{
-      font-size:19px;
-      color:#0a7a2f;
-      font-weight:800;
-      margin-bottom:6px;
+    .btn-contact {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      background: #1877f2;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
     }
 
-    .modal-category{
-      font-size:13px;
-      color:#999;
-      margin-bottom:10px;
+    .btn-contact:hover {
+      background: #145fc2;
     }
 
-    .modal-long{
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .modal-actions{ margin-top:14px; }
-
-    .btn-contact{
-      display:inline-block;
-      padding:8px 14px;
-      border-radius:8px;
-      border:none;
-      background:#1877f2;
-      color:#fff;
-      font-size:14px;
-      font-weight:700;
-      cursor:pointer;
-      text-decoration:none;
-    }
-
-    .btn-contact:hover{ background:#145fc2; }
-
-    @media (max-width:720px){
-      .header-wrap{ gap:10px; }
-      .logo-box{ width: 92px; min-width:92px; }
-      .logo-box img{ width: 72px; height:72px; }
-      .header-title{ font-size: 18px; }
-      .header-desc{ font-size: 12.5px; }
-      .modal-body{ flex-direction:column; }
-      .modal{ max-height:100vh; border-radius:0; }
-      .below-actions{ flex-direction:column; }
-      .big-btn{ width:100%; }
+    @media (max-width: 720px) {
+      .topbar {
+        grid-template-columns: 90px 1fr 90px;
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+      }
+      .modal-body {
+        flex-direction: column;
+      }
+      .modal {
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      .btn {
+        width: 100%;
+        min-width: unset;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="header-wrap">
-      <!-- Лого НЕ кликабельное -->
-      <div class="logo-box">
-        <img src="logofin.png" alt="Molfar House Logo">
-      </div>
-
-      <div class="header-center">
-        <h1 class="header-title">ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
-        <div class="header-desc">
-          Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах. Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
-        </div>
-      </div>
+<header>
+  <div class="topbar">
+    <div class="logo-wrap">
+      <!-- ЛОГО НЕ КЛИКАБЕЛЬНОЕ -->
+      <img class="logo" src="logofin.png" alt="Molfar House Logo">
     </div>
-  </header>
 
-  <main>
-    <div class="catalog-title">MolfarHouse Catalog</div>
-
-    <div id="list" class="list"></div>
-
-    <!-- Кнопки под каталогом -->
-    <div class="below-actions">
-      <a class="big-btn btn-messenger" href="https://m.me/896521503539274" target="_blank" rel="noopener">
-        КНОПКА ДЛЯ ЗВ`ЯЗКУ
-      </a>
-
-      <a class="big-btn btn-facebook" href="https://www.facebook.com/profile.php?id=61582619286310" target="_blank" rel="noopener">
-        ПІДПИШІТЬСЯ НА ФЕЙСБУК
-      </a>
+    <div class="head-center">
+      <h1>ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
+      <p>
+        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах.
+        Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
+      </p>
     </div>
-  </main>
 
-  <!-- Модальне вікно -->
-  <div id="modalBackdrop" class="modal-backdrop">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title" id="modalTitle"></div>
-        <button class="modal-close" id="modalClose">&times;</button>
+    <div class="spacer"></div>
+  </div>
+</header>
+
+<main>
+  <div class="section-title">MolfarHouse Catalog</div>
+  <div id="list" class="list"></div>
+
+  <div class="bottom-actions">
+    <!-- ССЫЛКУ НА МЕССЕНДЖЕР БЕРУ ИЗ ТВОЕГО СКРИНА -->
+    <a class="btn btn-messenger" href="https://m.me/896521503539274" target="_blank" rel="noopener">
+      КНОПКА ДЛЯ ЗВ`ЯЗКУ
+    </a>
+
+    <a class="btn btn-facebook" href="https://facebook.com/profile.php?id=61582619286310" target="_blank" rel="noopener">
+      ПІДПИШІТЬСЯ НА ФЕЙСБУК
+    </a>
+  </div>
+</main>
+
+<!-- Модальне вікно -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-left">
+        <img id="modalMainImg" class="modal-main-img" src="" alt="">
+        <div id="thumbs" class="thumbs"></div>
       </div>
-
-      <div class="modal-body">
-        <div class="modal-left">
-          <img id="modalMainImg" class="modal-main-img" src="" alt="">
-          <div id="thumbs" class="thumbs"></div>
-        </div>
-
-        <div class="modal-right">
-          <div class="modal-price" id="modalPrice"></div>
-          <div class="modal-category" id="modalCategory"></div>
-          <div class="modal-long" id="modalLong"></div>
-
-          <div class="modal-actions">
-            <a id="modalContact" class="btn-contact" href="#" target="_blank" rel="noopener">
-              Написати в Messenger
-            </a>
-          </div>
+      <div class="modal-right">
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-long" id="modalLong"></div>
+        <div class="modal-actions">
+          <a id="modalContact" class="btn-contact" href="#" target="_blank" rel="noopener">
+            Написати в Messenger
+          </a>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    async function loadCatalog() {
-      try {
-        const res = await fetch('data.json');
-        const items = await res.json();
-        renderList(items);
-        window._catalogItems = items;
-      } catch (e) {
-        console.error('Помилка завантаження каталогу', e);
-      }
+<script>
+  async function loadCatalog() {
+    try {
+      const res = await fetch('data.json');
+      const items = await res.json();
+      renderList(items);
+      window._catalogItems = items;
+    } catch (e) {
+      console.error('Помилка завантаження каталогу', e);
     }
+  }
 
-    function renderList(items) {
-      const list = document.getElementById('list');
-      list.innerHTML = '';
+  function renderList(items) {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
 
-      items.forEach(item => {
-        const mainImg = item.images && item.images.length ? item.images[0] : '';
+    items.forEach(item => {
+      const mainImg = item.images && item.images.length ? item.images[0] : '';
 
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.id = item.id;
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.id = item.id;
 
-        card.innerHTML = `
-          <img class="card-img" src="${mainImg}" alt="${item.name}">
-          <div class="card-body">
-            <div class="card-title">${item.name}</div>
-            <div class="card-price">${item.price || ''}</div>
-            <div class="card-short">${item.short || ''}</div>
-            <div class="card-category">${item.category || ''}</div>
-          </div>
-        `;
+      card.innerHTML = `
+        <img class="card-img" src="${mainImg}" alt="${item.name || ''}">
+        <div class="card-body">
+          <div class="card-title">${item.name || ''}</div>
+          <div class="card-price">${item.price || ''}</div>
+          <div class="card-short">${item.short || ''}</div>
+          <div class="card-category">${item.category || ''}</div>
+        </div>
+      `;
 
-        card.addEventListener('click', () => openModal(item.id));
-        list.appendChild(card);
-      });
-    }
-
-    function openModal(id) {
-      const item = (window._catalogItems || []).find(i => i.id === id);
-      if (!item) return;
-
-      const backdrop = document.getElementById('modalBackdrop');
-      const titleEl = document.getElementById('modalTitle');
-      const priceEl = document.getElementById('modalPrice');
-      const catEl = document.getElementById('modalCategory');
-      const longEl = document.getElementById('modalLong');
-      const mainImgEl = document.getElementById('modalMainImg');
-      const thumbsEl = document.getElementById('thumbs');
-      const contactEl = document.getElementById('modalContact');
-
-      titleEl.textContent = item.name || '';
-      priceEl.textContent = item.price || '';
-      catEl.textContent = item.category ? 'Категорія: ' + item.category : '';
-      longEl.textContent = item.long || '';
-
-      thumbsEl.innerHTML = '';
-
-      if (item.images && item.images.length) {
-        mainImgEl.src = item.images[0];
-
-        item.images.forEach((src, idx) => {
-          const img = document.createElement('img');
-          img.src = src;
-          if (idx === 0) img.classList.add('active');
-          img.addEventListener('click', () => {
-            mainImgEl.src = src;
-            [...thumbsEl.querySelectorAll('img')].forEach(t => t.classList.remove('active'));
-            img.classList.add('active');
-          });
-          thumbsEl.appendChild(img);
-        });
-      } else {
-        mainImgEl.src = '';
-      }
-
-      if (item.contactLink) {
-        contactEl.href = item.contactLink;
-      } else {
-        contactEl.href = 'https://m.me/896521503539274';
-      }
-
-      backdrop.classList.add('show');
-    }
-
-    function closeModal() {
-      document.getElementById('modalBackdrop').classList.remove('show');
-    }
-
-    document.getElementById('modalBackdrop').addEventListener('click', e => {
-      if (e.target.id === 'modalBackdrop') closeModal();
+      card.addEventListener('click', () => openModal(item.id));
+      list.appendChild(card);
     });
-    document.getElementById('modalClose').addEventListener('click', closeModal);
+  }
 
-    loadCatalog();
-  </script>
+  function openModal(id) {
+    const item = (window._catalogItems || []).find(i => i.id === id);
+    if (!item) return;
+
+    const backdrop = document.getElementById('modalBackdrop');
+    const titleEl = document.getElementById('modalTitle');
+    const priceEl = document.getElementById('modalPrice');
+    const catEl = document.getElementById('modalCategory');
+    const longEl = document.getElementById('modalLong');
+    const mainImgEl = document.getElementById('modalMainImg');
+    const thumbsEl = document.getElementById('thumbs');
+    const contactEl = document.getElementById('modalContact');
+
+    titleEl.textContent = item.name || '';
+    priceEl.textContent = item.price || '';
+    catEl.textContent = item.category ? 'Категорія: ' + item.category : '';
+    longEl.textContent = item.long || '';
+
+    thumbsEl.innerHTML = '';
+
+    if (item.images && item.images.length) {
+      mainImgEl.src = item.images[0];
+
+      item.images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        if (idx === 0) img.classList.add('active');
+        img.addEventListener('click', () => {
+          mainImgEl.src = src;
+          [...thumbsEl.querySelectorAll('img')].forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+        });
+        thumbsEl.appendChild(img);
+      });
+    } else {
+      mainImgEl.src = '';
+    }
+
+    contactEl.href = item.contactLink ? item.contactLink : 'https://m.me/896521503539274';
+
+    backdrop.classList.add('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('show');
+  }
+
+  document.getElementById('modalBackdrop').addEventListener('click', e => {
+    if (e.target.id === 'modalBackdrop') closeModal();
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+
+  loadCatalog();
+</script>
 </body>
 </html>
