@@ -40,6 +40,7 @@
     .logo {
       width: 170px;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+      display: block;
     }
 
     .headline {
@@ -87,38 +88,78 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       cursor: pointer;
       overflow: hidden;
+      transition: transform .1s ease, box-shadow .1s ease;
       display: flex;
       flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     }
 
     .card-img {
       width: 100%;
       height: 190px;
       object-fit: cover;
+      background: #ddd;
     }
 
     .card-body {
-      padding: 10px 12px;
+      padding: 10px 12px 12px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
 
-    .card-title {
-      font-weight: 700;
-      font-size: 15px;
+    .card-title { font-weight: 700; }
+    .card-price { color: #0a7a2f; font-weight: 800; }
+    .card-short { font-size: 13px; color: #666; }
+
+    /* === INFO TEXT BETWEEN CATALOG AND BUTTONS === */
+    .info-note {
+      max-width: 900px;
+      margin: 26px auto 18px;
+      padding: 18px 22px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      font-size: 18px;
+      line-height: 1.5;
+      text-align: center;
     }
 
-    .card-price {
-      color: #0a7a2f;
+    .bottom-actions {
+      max-width: 1100px;
+      margin: 18px auto 34px;
+      padding: 0 16px;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .big-btn {
+      flex: 1 1 320px;
+      padding: 16px;
+      border-radius: 12px;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 16px;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+      transition: transform .12s ease, box-shadow .12s ease;
+      user-select: none;
     }
 
-    .card-short {
-      font-size: 13px;
-      color: #666;
+    .big-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.16);
     }
+
+    .btn-messenger { background: #1877f2; }
+    .btn-facebook { background: #0b5bd3; }
 
     /* ===== МОДАЛКА ===== */
     .modal-backdrop {
@@ -131,7 +172,6 @@
       z-index: 1000;
       padding: 16px;
     }
-
     .modal-backdrop.show { display: flex; }
 
     .modal {
@@ -151,11 +191,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
     }
 
     .modal-title {
       font-weight: 700;
-      font-size: 17px;
+      font-size: 16px;
+      line-height: 1.25;
     }
 
     .modal-close {
@@ -163,10 +205,13 @@
       border: none;
       font-size: 22px;
       cursor: pointer;
+      line-height: 1;
+      padding: 6px 10px;
     }
 
     .modal-body {
       display: flex;
+      flex-direction: row;
       gap: 16px;
       padding: 12px 16px 16px;
       overflow-y: auto;
@@ -185,36 +230,102 @@
       border-radius: 8px;
     }
 
+    .thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .thumbs img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: #ddd;
+    }
+
+    .thumbs img.active { border-color: #0a7a2f; }
+
     .modal-price {
-      font-size: 20px;
+      font-size: 19px;
       color: #0a7a2f;
       font-weight: 800;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     .modal-long {
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.5;
+      white-space: pre-wrap;
     }
 
+    .modal-actions { margin-top: 14px; }
+
+    .btn-contact {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      background: #1877f2;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-contact:hover { background: #145fc2; }
+
+    /* ===== ТОЛЬКО МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
     @media (max-width: 720px) {
+      header { padding: 14px 14px; }
+
       .topbar {
         grid-template-columns: 1fr;
+        justify-items: center;
         text-align: center;
+        gap: 10px;
       }
 
       .logo {
-        margin: 0 auto;
+        width: 190px; /* НЕ уменьшаем — наоборот чуть удобнее для мобилки */
       }
 
-      .modal-body {
-        flex-direction: column;
+      header h1 {
+        font-size: 22px; /* оставляем */
       }
 
-      .modal {
-        max-height: 100vh;
-        border-radius: 0;
+      .desc {
+        font-size: 18px; /* только чтобы не “ломало” по ширине на телефоне */
+        line-height: 1.35;
+        padding: 0 6px;
+        word-break: normal;
+        overflow-wrap: break-word;
       }
+
+      .catalog-title {
+        margin: 14px 0 10px;
+      }
+
+      .info-note {
+        margin: 18px 16px 14px;
+        font-size: 16px;
+      }
+
+      .bottom-actions {
+        margin: 14px auto 26px;
+      }
+
+      .big-btn {
+        flex: 1 1 100%;
+      }
+
+      .modal-body { flex-direction: column; }
+      .modal { max-height: 100vh; border-radius: 0; }
+      .modal-main-img { max-height: 280px; }
     }
   </style>
 </head>
@@ -223,14 +334,16 @@
 
 <header>
   <div class="topbar">
-    <img class="logo" src="logofin.png" alt="Molfar House Logo">
+    <img class="logo" src="logofin.png?v=3" alt="Molfar House Logo">
+
     <div class="headline">
       <h1>ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
       <div class="desc">
-        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах.
-        Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
+        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах. Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
       </div>
     </div>
+
+    <div></div>
   </div>
 </header>
 
@@ -239,68 +352,153 @@
   <div id="list" class="list"></div>
 </main>
 
+<!-- INFO TEXT -->
+<div class="info-note">
+  <strong>Ми знаходимося у Farmington Hills, Michigan (USA).</strong><br><br>
+  Напишіть нам, щоб уточнити наявність виробів, зробити індивідуальне замовлення або дізнатися терміни виготовлення.<br><br>
+  Ви можете забрати товар з нашого складу, якщо вам буде зручно.<br>
+  Також можлива поштова відправка за рахунок отримувача — на жаль, телепортацію ще не підключили. Працюємо над цим.<br><br>
+  Оскільки ми тільки починаємо, у роботі можливі помилки.<br>
+  Тому будемо вдячні за поради та рекомендації. Тримаймося разом!
+</div>
+
+<div class="bottom-actions">
+  <a class="big-btn btn-messenger" href="https://m.me/896521503539274" target="_blank" rel="noopener">
+    КНОПКА ДЛЯ ЗВ`ЯЗКУ
+  </a>
+  <a class="big-btn btn-facebook" href="https://www.facebook.com/" target="_blank" rel="noopener">
+    ПІДПИШІТЬСЯ НА ФЕЙСБУК
+  </a>
+</div>
+
+<!-- Модальне вікно -->
 <div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-header">
       <div class="modal-title" id="modalTitle"></div>
-      <button class="modal-close" id="modalClose">&times;</button>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
     </div>
     <div class="modal-body">
       <div class="modal-left">
-        <img id="modalMainImg" class="modal-main-img" src="">
+        <img id="modalMainImg" class="modal-main-img" src="" alt="">
+        <div id="thumbs" class="thumbs"></div>
       </div>
       <div class="modal-right">
         <div class="modal-price" id="modalPrice"></div>
         <div class="modal-long" id="modalLong"></div>
+        <div class="modal-actions">
+          <a id="modalContact" class="btn-contact" href="https://m.me/896521503539274" target="_blank" rel="noopener">
+            Написати в Messenger
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-async function loadCatalog() {
-  const res = await fetch('data.json');
-  const items = await res.json();
-  window._items = items;
-  render(items);
-}
+  const DEFAULT_MESSENGER = "https://m.me/896521503539274";
 
-function render(items) {
-  const list = document.getElementById('list');
-  list.innerHTML = '';
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img class="card-img" src="${item.images[0]}">
-      <div class="card-body">
-        <div class="card-title">${item.name}</div>
-        <div class="card-price">${item.price}</div>
-        <div class="card-short">${item.short}</div>
-      </div>
-    `;
-    card.onclick = () => openModal(item);
-    list.appendChild(card);
-  });
-}
+  async function loadCatalog() {
+    try {
+      const res = await fetch('data.json?v=' + Date.now());
+      const items = await res.json();
+      window._catalogItems = items;
+      renderList(items);
+    } catch (e) {
+      console.error('Помилка завантаження каталогу', e);
+    }
+  }
 
-function openModal(item) {
-  document.getElementById('modalTitle').textContent = item.name;
-  document.getElementById('modalPrice').textContent = item.price;
-  document.getElementById('modalLong').textContent = item.long;
-  document.getElementById('modalMainImg').src = item.images[0];
-  document.getElementById('modalBackdrop').classList.add('show');
-}
+  function renderList(items) {
+    const list = document.getElementById('list');
+    list.innerHTML = '';
 
-document.getElementById('modalClose').onclick = () =>
-  document.getElementById('modalBackdrop').classList.remove('show');
+    items.forEach(item => {
+      const mainImg = (item.images && item.images.length) ? item.images[0] : '';
 
-document.getElementById('modalBackdrop').onclick = e => {
-  if (e.target.id === 'modalBackdrop')
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.id = item.id;
+
+      card.innerHTML = `
+        <img class="card-img" src="${mainImg}" alt="${escapeHtml(item.name || '')}">
+        <div class="card-body">
+          <div class="card-title">${escapeHtml(item.name || '')}</div>
+          <div class="card-price">${escapeHtml(item.price || '')}</div>
+          <div class="card-short">${escapeHtml(item.short || '')}</div>
+        </div>
+      `;
+
+      card.addEventListener('click', () => openModal(item.id));
+      list.appendChild(card);
+    });
+  }
+
+  function openModal(id) {
+    const item = (window._catalogItems || []).find(i => i.id === id);
+    if (!item) return;
+
+    const backdrop = document.getElementById('modalBackdrop');
+    const titleEl = document.getElementById('modalTitle');
+    const priceEl = document.getElementById('modalPrice');
+    const longEl = document.getElementById('modalLong');
+    const mainImgEl = document.getElementById('modalMainImg');
+    const thumbsEl = document.getElementById('thumbs');
+    const contactEl = document.getElementById('modalContact');
+
+    titleEl.textContent = item.name || '';
+    priceEl.textContent = item.price || '';
+    longEl.textContent = item.long || '';
+
+    thumbsEl.innerHTML = '';
+
+    if (item.images && item.images.length) {
+      mainImgEl.src = item.images[0];
+
+      item.images.forEach((src, idx) => {
+        const img = document.createElement('img');
+        img.src = src;
+        if (idx === 0) img.classList.add('active');
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          mainImgEl.src = src;
+          [...thumbsEl.querySelectorAll('img')].forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+        });
+        thumbsEl.appendChild(img);
+      });
+    } else {
+      mainImgEl.src = '';
+    }
+
+    contactEl.href = item.contactLink ? item.contactLink : DEFAULT_MESSENGER;
+    backdrop.classList.add('show');
+  }
+
+  function closeModal() {
     document.getElementById('modalBackdrop').classList.remove('show');
-};
+  }
 
-loadCatalog();
+  document.getElementById('modalBackdrop').addEventListener('click', e => {
+    if (e.target.id === 'modalBackdrop') closeModal();
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#039;');
+  }
+
+  loadCatalog();
 </script>
 
 </body>
