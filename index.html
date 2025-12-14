@@ -12,72 +12,62 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: #222;
-
-      /* ФОН — zoom out, без мыла */
-      background-image: url('fon.png');
-      background-repeat: repeat;
-      background-size: 900px 900px;   /* zoom out */
-      background-position: center;
-      background-attachment: fixed;
+      background: url("fon.png") repeat;
+      background-size: 1200px auto; /* zoom out */
     }
 
-    /* === ВЕРХНЯЯ ПЛАШКА === */
+    /* ===== HEADER ===== */
     header {
-      background: #2F3A2E; /* ТЁМНО-ОЛИВКОВЫЙ */
-      color: #fff;
-      padding: 16px 20px;
-      border-bottom: 2px solid rgba(255,255,255,0.12);
-    }
-
-    .topbar {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 120px 1fr 120px;
+      background: url("plashka.PNG.jpg") center/cover no-repeat;
+      padding: 48px 32px; /* 1.5x height */
+      display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 32px;
     }
 
     .logo {
-      width: 76px;
-      height: 76px;
-      object-fit: contain;
-      display: block;
+      width: 136px; /* 1.7x */
+      height: auto;
+      flex-shrink: 0;
     }
 
-    .head-center {
+    .header-text {
+      flex: 1;
       text-align: center;
+      color: #fff;
     }
 
-    .head-center h1 {
-      margin: 0;
-      font-size: 22px;
+    /* 🔴 ЗАГОЛОВОК — БЕЗ УВЕЛИЧЕНИЯ */
+    .header-text h1 {
+      margin: 0 0 14px;
+      font-size: 22px; /* исходный размер */
       letter-spacing: 1px;
-      font-weight: 800;
     }
 
-    .head-center p {
-      margin: 6px 0 0;
-      font-size: 13px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.9);
+    /* 🟢 ОПИСАНИЕ — УВЕЛИЧЕНО */
+    .header-text p {
+      margin: 0;
+      font-size: 22px; /* увеличен ТОЛЬКО текст описания */
+      line-height: 1.6;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    /* ===== MAIN ===== */
     main {
       max-width: 1100px;
-      margin: 18px auto;
-      padding: 0 16px 30px;
+      margin: 30px auto 0;
+      padding: 0 16px 40px;
     }
 
-    .section-title {
-      margin: 12px 0 16px;
+    .catalog-title {
       text-align: center;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
+      font-size: 22px;
+      margin: 20px 0 24px;
+      font-weight: 600;
     }
 
-    /* === КАРТОЧКИ === */
     .list {
       display: grid;
       grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
@@ -85,17 +75,19 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.94);
+      background: #fff;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       cursor: pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
+      display: flex;
+      flex-direction: column;
+      transition: transform .1s ease, box-shadow .1s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     }
 
     .card-img {
@@ -107,69 +99,68 @@
 
     .card-body {
       padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .card-title {
-      font-weight: 700;
+      font-weight: 600;
       font-size: 15px;
     }
 
     .card-price {
-      color: #1f7a3a;
-      font-weight: 800;
-      margin-top: 2px;
+      color: #0a7a2f;
+      font-weight: 700;
+      font-size: 15px;
     }
 
     .card-short {
       font-size: 13px;
       color: #666;
-      margin-top: 4px;
     }
 
     .card-category {
       font-size: 12px;
       color: #999;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
-    /* === КНОПКИ === */
-    .bottom-actions {
-      margin: 22px auto 0;
+    /* ===== BUTTONS ===== */
+    .buttons {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 20px;
+      margin: 40px 0;
     }
 
     .btn {
       flex: 1;
-      min-width: 260px;
-      padding: 14px 18px;
-      border-radius: 14px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
       text-align: center;
-      font-weight: 800;
       text-decoration: none;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      color: #fff;
     }
 
     .btn-messenger {
       background: #1877f2;
-      color: #fff;
     }
 
     .btn-facebook {
-      background: #2F3A2E;
-      color: #fff;
+      background: #4267B2;
     }
 
-    /* === МОБИЛКА === */
     @media (max-width: 720px) {
-      .topbar {
-        grid-template-columns: 90px 1fr 90px;
+      header {
+        flex-direction: column;
+        text-align: center;
       }
-      .logo {
-        width: 64px;
-        height: 64px;
+
+      .buttons {
+        flex-direction: column;
       }
     }
   </style>
@@ -178,36 +169,29 @@
 <body>
 
 <header>
-  <div class="topbar">
-    <img src="logofin.png" alt="Molfar House Logo" class="logo">
+  <img src="logofin.png" class="logo" alt="Molfar House Logo">
 
-    <div class="head-center">
-      <h1>ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
-      <p>
-        Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах.
-        Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи та персоналізовані вироби для подарунків, подій і бізнесу.
-      </p>
-    </div>
-
-    <div></div>
+  <div class="header-text">
+    <h1>ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
+    <p>
+      Виконуємо високоточне лазерне гравіювання та різку на різних матеріалах.
+      Створюємо індивідуальні написи, логотипи, орнаменти, декоративні елементи
+      та персоналізовані вироби для подарунків, подій і бізнесу.
+    </p>
   </div>
 </header>
 
 <main>
-  <div class="section-title">MolfarHouse Catalog</div>
+  <div class="catalog-title">MolfarHouse Catalog</div>
 
   <div id="list" class="list"></div>
 
-  <div class="bottom-actions">
-    <a class="btn btn-messenger"
-       href="https://m.me/896521503539274"
-       target="_blank">
+  <div class="buttons">
+    <a class="btn btn-messenger" href="https://m.me/896521503539274" target="_blank">
       КНОПКА ДЛЯ ЗВ`ЯЗКУ
     </a>
 
-    <a class="btn btn-facebook"
-       href="https://facebook.com/profile.php?id=61582619286310"
-       target="_blank">
+    <a class="btn btn-facebook" href="https://facebook.com" target="_blank">
       ПІДПИШІТЬСЯ НА ФЕЙСБУК
     </a>
   </div>
@@ -217,22 +201,25 @@
 async function loadCatalog() {
   const res = await fetch('data.json');
   const items = await res.json();
+  renderList(items);
+}
+
+function renderList(items) {
   const list = document.getElementById('list');
+  list.innerHTML = '';
 
   items.forEach(item => {
+    const img = item.images?.[0] || '';
     const card = document.createElement('div');
     card.className = 'card';
-
     card.innerHTML = `
-      <img class="card-img" src="${item.images[0]}" alt="">
+      <img class="card-img" src="${img}">
       <div class="card-body">
         <div class="card-title">${item.name}</div>
-        <div class="card-price">${item.price}</div>
-        <div class="card-short">${item.short}</div>
-        <div class="card-category">${item.category}</div>
-      </div>
-    `;
-
+        <div class="card-price">${item.price || ''}</div>
+        <div class="card-short">${item.short || ''}</div>
+        <div class="card-category">${item.category || ''}</div>
+      </div>`;
     list.appendChild(card);
   });
 }
