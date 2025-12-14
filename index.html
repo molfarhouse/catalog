@@ -12,8 +12,6 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: #222;
-
-      /* Ватман — без изменений */
       background: #f5f5f5;
       background-image: url('fon.png');
       background-repeat: repeat;
@@ -21,15 +19,12 @@
       background-position: top left;
     }
 
-    /* ================= HEADER ================= */
     header {
       color: #fff;
       padding: 18px 24px;
-
-      /* ✅ ЗЕЛЁНАЯ ПЛАШКА — ZOOM-OUT (мельче и четче) */
       background-image: url('plashka.PNG.jpg');
       background-repeat: repeat;
-      background-size: 600px auto; /* ← ключевое исправление: меньше = сильнее zoom-out */
+      background-size: 600px auto;
       background-position: center;
     }
 
@@ -42,23 +37,13 @@
       gap: 16px;
     }
 
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-    }
-
     .logo {
       width: 170px;
-      height: auto;
-      display: block;
-      background: transparent;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
     }
 
     .headline {
       text-align: center;
-      padding: 0 10px;
     }
 
     header h1 {
@@ -66,21 +51,17 @@
       font-size: 22px;
       font-weight: 800;
       letter-spacing: 1px;
-      color: #ffffff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.45);
     }
 
     .desc {
-      margin: 10px auto 0;
-      max-width: 900px;
+      margin-top: 10px;
       font-size: 22px;
-      line-height: 1.35;
       font-weight: 700;
-      color: #ffffff;
+      line-height: 1.35;
       text-shadow: 0 2px 10px rgba(0,0,0,0.45);
     }
 
-    /* ================= MAIN ================= */
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -92,7 +73,6 @@
       margin: 18px 0 10px;
       font-weight: 800;
       font-size: 22px;
-      color: #111;
     }
 
     .list {
@@ -104,51 +84,39 @@
     .card {
       background: rgba(255,255,255,0.92);
       border-radius: 10px;
-      overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       cursor: pointer;
-      transition: transform .1s ease, box-shadow .1s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      overflow: hidden;
     }
 
     .card-img {
       width: 100%;
       height: 190px;
       object-fit: cover;
-      background: #ddd;
     }
 
     .card-body {
-      padding: 10px 12px 12px;
+      padding: 10px 12px;
     }
 
-    .card-title {
-      font-weight: 700;
-      font-size: 15px;
+    .card-title { font-weight: 700; }
+    .card-price { color: #0a7a2f; font-weight: 800; }
+    .card-short { font-size: 13px; color: #666; }
+    .card-category { font-size: 12px; color: #999; }
+
+    /* === INFO TEXT BETWEEN CATALOG AND BUTTONS === */
+    .info-note {
+      max-width: 900px;
+      margin: 26px auto 18px;
+      padding: 18px 22px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      font-size: 18px; /* чуть меньше, чем .desc (22px) */
+      line-height: 1.5;
+      text-align: center;
     }
 
-    .card-price {
-      color: #0a7a2f;
-      font-weight: 800;
-      font-size: 15px;
-    }
-
-    .card-short {
-      font-size: 13px;
-      color: #666;
-    }
-
-    .card-category {
-      font-size: 12px;
-      color: #999;
-      margin-top: 4px;
-    }
-
-    /* ================= BUTTONS ================= */
     .bottom-actions {
       max-width: 1100px;
       margin: 18px auto 34px;
@@ -162,30 +130,17 @@
     .big-btn {
       flex: 1 1 320px;
       padding: 16px;
-      text-align: center;
       border-radius: 12px;
       font-weight: 800;
       font-size: 16px;
-      text-decoration: none;
+      text-align: center;
       color: #fff;
+      text-decoration: none;
       box-shadow: 0 10px 22px rgba(0,0,0,0.12);
     }
 
     .btn-messenger { background: #1877f2; }
-    .btn-facebook  { background: #0b5bd3; }
-
-    /* ================= MOBILE ================= */
-    @media (max-width: 720px) {
-      .topbar {
-        grid-template-columns: 160px 1fr;
-      }
-      .logo {
-        width: 140px;
-      }
-      .desc {
-        font-size: 18px;
-      }
-    }
+    .btn-facebook { background: #0b5bd3; }
   </style>
 </head>
 
@@ -193,10 +148,7 @@
 
 <header>
   <div class="topbar">
-    <div class="logo-wrap">
-      <img class="logo" src="logofin.png?v=3" alt="Molfar House Logo">
-    </div>
-
+    <img class="logo" src="logofin.png?v=3" alt="Molfar House Logo">
     <div class="headline">
       <h1>ЛАЗЕРНА РІЗКА ТА ГРАВІЮВАННЯ</h1>
       <div class="desc">
@@ -210,6 +162,16 @@
   <div class="catalog-title">MolfarHouse Catalog</div>
   <div id="list" class="list"></div>
 </main>
+
+<!-- INFO TEXT -->
+<div class="info-note">
+  <strong>Ми знаходимося у Farmington Hills, Michigan (USA).</strong><br><br>
+  Напишіть нам, щоб уточнити наявність виробів, зробити індивідуальне замовлення або дізнатися терміни виготовлення.<br><br>
+  Ви можете забрати товар з нашого складу, якщо вам буде зручно.<br>
+  Також можлива поштова відправка за рахунок отримувача — на жаль, телепортацію ще не підключили. Працюємо над цим.<br><br>
+  Оскільки ми тільки починаємо, у роботі можливі помилки.<br>
+  Тому будемо вдячні за поради та рекомендації. Тримаймося разом!
+</div>
 
 <div class="bottom-actions">
   <a class="big-btn btn-messenger" href="https://m.me/896521503539274" target="_blank">
@@ -226,18 +188,16 @@
     const items = await res.json();
     const list = document.getElementById('list');
     list.innerHTML = '';
-
     items.forEach(item => {
-      const img = item.images?.[0] || '';
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <img class="card-img" src="${img}">
+        <img class="card-img" src="${item.images[0]}">
         <div class="card-body">
           <div class="card-title">${item.name}</div>
-          <div class="card-price">${item.price || ''}</div>
-          <div class="card-short">${item.short || ''}</div>
-          <div class="card-category">${item.category || ''}</div>
+          <div class="card-price">${item.price}</div>
+          <div class="card-short">${item.short}</div>
+          <div class="card-category">${item.category}</div>
         </div>`;
       list.appendChild(card);
     });
