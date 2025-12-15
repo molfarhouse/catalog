@@ -291,15 +291,15 @@
       }
 
       .logo {
-        width: 190px; /* НЕ уменьшаем — наоборот чуть удобнее для мобилки */
+        width: 190px;
       }
 
       header h1 {
-        font-size: 22px; /* оставляем */
+        font-size: 22px;
       }
 
       .desc {
-        font-size: 18px; /* только чтобы не “ломало” по ширине на телефоне */
+        font-size: 18px;
         line-height: 1.35;
         padding: 0 6px;
         word-break: normal;
@@ -366,7 +366,7 @@
   <a class="big-btn btn-messenger" href="https://m.me/896521503539274" target="_blank" rel="noopener">
     КНОПКА ДЛЯ ЗВ`ЯЗКУ
   </a>
-  <a class="big-btn btn-facebook" href="https://www.facebook.com/" target="_blank" rel="noopener">
+  <a class="big-btn btn-facebook" href="https://www.facebook.com/profile.php?id=61582619286310" target="_blank" rel="noopener">
     ПІДПИШІТЬСЯ НА ФЕЙСБУК
   </a>
 </div>
@@ -472,7 +472,9 @@
       mainImgEl.src = '';
     }
 
-    contactEl.href = item.contactLink ? item.contactLink : DEFAULT_MESSENGER;
+    /* ВАЖНО: все товары всегда ведут на один и тот же Messenger */
+    contactEl.href = DEFAULT_MESSENGER;
+
     backdrop.classList.add('show');
   }
 
